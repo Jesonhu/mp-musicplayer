@@ -1,0 +1,29 @@
+<!--引入模板文件-->
+<import src="../components/movielist/movielist.wxml"></import>
+
+<!--加载提示-->
+<loading hidden="{{loading}}">
+        加载中...
+</loading>
+
+<!--头部标题-->
+<view class="head-title" bindtap="bindViewTap">
+    <text>最新上映</text>
+</view>
+
+<scroll-view
+        class="main"
+        scroll-y="true"
+        bindscrolltoupper=""
+        bindscrolltolower=""
+        bindscroll=""
+        scroll-into-view=""
+        scroll-top=""
+>
+    <block
+            wx:for="{{movies}}"
+            wx:key="item.id"
+    >
+        <template is="try" data="{{item}}"></template>
+    </block>
+</scroll-view>

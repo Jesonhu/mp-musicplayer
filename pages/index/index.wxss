@@ -1,0 +1,22 @@
+/**index.wxss**/
+index_moive-list{
+  display:border-box;
+}
+.index_moive-item {
+  display: inline-block;
+  box-sizing: border-box;
+  margin:0 5rpx;
+  width:50%;
+}
+.index_moive-img{
+  width:100%;
+}
+/** wxss **/
+/** 修改默认的navigator点击态 **/
+.navigator-hover {
+    color:blue;
+}
+/** 自定义其他点击态样式类 **/
+.other-navigator-hover {
+    color:red;
+}

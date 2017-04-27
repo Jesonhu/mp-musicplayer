@@ -1,0 +1,52 @@
+{
+  "pages":[
+    "pages/index/index",
+    "pages/rank/rank",
+    "pages/temple/temple"
+  ],
+  "window":{
+    "enablePullDownRefresh":true,
+
+    "navigationBarBackgroundColor" : "#277EDE",
+    "navigationBarTitleText": "微电影",
+    "navigationBarTextStyle":"#fff",
+
+    "backgroundColor":"#fff"
+  },
+
+  
+  "tabBar": {
+    "color": "#d7ced5",
+    "selectedColor": "#535f71",
+
+    "borderStyle": "white",  
+    "backgroundColor": "#277EDE",
+
+    "list": [  
+      {
+        "pagePath": "pages/index/index",  
+        "text": "推荐电影",                 
+        "iconPath": "image/board.png", 
+        "selectedIconPath": "image/board-actived.png" 
+      },
+
+      {
+        "pagePath": "pages/rank/rank",
+        "text": "北美票房",
+        "iconPath": "image/note.png",
+        "selectedIconPath": "image/note-actived.png"
+      }
+    ]
+  },
+
+  
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 9000,
+    "uploadFile":8000,
+    "connectSocket":7000
+  },
+
+ 
+  "debug": true
+}
