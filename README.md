@@ -1,2 +1,2 @@
-# xcx-douban
-微信小程序：豆瓣电影
+# xcx-qq h5 music player
+微信小程序：音乐播放器
