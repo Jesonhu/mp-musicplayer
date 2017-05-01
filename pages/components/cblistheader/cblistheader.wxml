@@ -1,0 +1,21 @@
+<template name="cblistheader" >
+    <view id="cblistheader">
+        <view class="focus-body">
+            <view class="focus-info">
+                <view class="focus-text">
+                    <scroll-view class="focus-tit" scroll-x="{{true}}">
+                        <text class="tit-text">{{dissname}}</text>
+                    </scroll-view>
+                    <view class="focus-desc">{{visitnum}}人播放 来自 : {{nickname}}</view>
+                </view>
+                <view class="focus-play"></view>
+            </view>
+        </view>
+        <view class="focus-bg">
+            <image class="img" src="{{focusBg}}" mode="widthFix"></image>
+        </view>
+        <view class="focus-gradient"
+              style="background-image: -webkit-linear-gradient(top, transparent, {{listBgColor}} 80%);"
+        ></view>
+    </view>
+</template>

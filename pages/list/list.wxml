@@ -1,0 +1,30 @@
+<import src="../components/cblistheader/cblistheader.wxml"></import>
+<import src="../components/cblist/cblist.wxml"></import>
+
+<view class="cdlist-wrapper" style="background-color:{{listBgColor}};"
+      wx:if="{{songlist.length>0}}"
+>
+
+    <!-- header 部分 -->
+    <template is="cblistheader"
+              data="{{dissname:dissname,visitnum:visitnum,nickname:nickname,focusBg:focusBg,listBgColor:listBgColor}}"></template>
+
+    <!-- 歌曲列表 -->
+    <template is="cdlist-songs"
+              data="{{songlist:songlist}}"
+    ></template>
+
+    <!-- 标签 -->
+    <view class="songlist-tit">
+        <text>标签</text>
+    </view>
+    <view class="songlist-tit songlist-tags__list">
+        <text class="tag-item" wx:for="{{songData.tags}}" wx:key="unique">{{item.name}}</text>
+    </view>
+    <view class="songlist-tit">
+        <text>简介</text>
+    </view>
+    <view class="songlist_summary">
+        <text class="text">{{songData.desc}}</text>
+    </view>
+</view>

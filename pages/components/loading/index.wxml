@@ -1,0 +1,5 @@
+<template name="loading" >
+    <loading hidden="{{loading}}">
+        数据加载中...
+    </loading>
+</template>

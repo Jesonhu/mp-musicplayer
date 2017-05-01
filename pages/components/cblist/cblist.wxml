@@ -1,0 +1,26 @@
+<template name="cdlist-songs" >
+    <view class="border_t cdlist-songs">
+        <view class="border_b songlist-item"
+              wx:for="{{songlist}}"
+              wx:key="unique"
+              bindtap="playsongTap"
+              data-data="{{item}}"
+              data-no="{{index}}"
+              data-id="{{item.id}}"
+              data-mid="{{item.mid}}"
+              data-albummid="{{item.album.mid}}"
+              data-from="cdlist"
+        >
+            <view class="songlist-title">
+                {{item.title}}
+            </view>
+            <view class="songlist-desc">
+                <text wx:if="{{item.fnote!=0 && item.isonly == 0 }}" class="icon-earth"></text>
+                <view class="songlist-singer">
+                    <text wx:for="{{item.singer}}" wx:for-item="singer" wx:key="unique">{{singer.name}}</text>
+                </view>
+                <text class="album"> · {{item.album.name}}</text>
+            </view>
+        </view>
+    </view>
+</template>

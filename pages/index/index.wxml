@@ -1,29 +1,209 @@
 <!--引入模板文件-->
 <import src="../components/movielist/movielist.wxml"></import>
+<import src="../components/loading/index.wxml"></import>
+<import src="../components/navbar/navbar.wxml"></import>
+<import src="../components/swiper/swiper.wxml"></import>
+
 
 <!--加载提示-->
-<loading hidden="{{loading}}">
-        加载中...
-</loading>
+<!--<template is="loading" data="{{loading}}"></template>-->
 
-<!--头部标题-->
-<view class="head-title" bindtap="bindViewTap">
-    <text>最新上映</text>
+<!--顶部tab导航-->
+<template is="navbar" data="{{navbar:navbar,currentTab:currentTab}}"></template>
+
+<!--首页 推荐-->
+<view class="recommend" hidden="{{currentTab !==0 }}">
+    <!-- 轮播图 -->
+    <template is="swiper" data="{{slider}}"></template>
+
+    <!-- 电台-->
+    <view class="channel station">
+        <text class="title">电台</text>
+        <view class="list">
+            <view class="{{radioList.length>0?'item':''}}"
+                  wx:for="{{radioList}}"
+                  wx:key="{{index}}"
+                  data-id="{{item.radioid}}"
+                  bindtap="onStationListTap"
+            >
+                <view class="list-media">
+                    <image class="img" src="{{item.picUrl}}" mode="widthFix"></image>
+                </view>
+                <text class="text">{{item.Ftitle}}</text>
+                <text class="play"></text>
+            </view>
+        </view>
+    </view>
+
+    <!-- 热门歌单 -->
+    <view class="channel hot">
+        <text class="{{songList.length>0?'title':''}}">热门歌单</text>
+        <view class="list">
+            <view class="item songitem"
+                  wx:for="{{songList}}"
+                  wx:key="{{item.id}}"
+                  data-id="{{item.id}}"
+                  bindtap="onHotListTap"
+            >
+                <view class="list-media">
+                    <image class="img" src="{{item.picUrl}}" mode="widthFix"></image>
+                    <text class="list-count">{{item.accessnum}}</text>
+                </view>
+                <text class="text">{{item.songListDesc}}</text>
+                <text class="author">{{item.songListAuthor}}</text>
+                <text class="play"></text>
+            </view>
+        </view>
+    </view>
+
 </view>
 
-<scroll-view
-        class="main"
-        scroll-y="true"
-        bindscrolltoupper=""
-        bindscrolltolower=""
-        bindscroll=""
-        scroll-into-view=""
-        scroll-top=""
->
-    <block
-            wx:for="{{movies}}"
-            wx:key="item.id"
+<!--排行榜-->
+<view id="toplist" hidden="{{currentTab !== 1}}">
+    <view class="item"
+        wx:for="{{topList}}"
+        wx:key="{{item.id}}"
+        data-id="{{item.id}}"
+        bindtap="onTopListTap"
     >
-        <template is="try" data="{{item}}"></template>
-    </block>
-</scroll-view>
+        <view class="media">
+            <image src="{{item.picUrl}}" class="img"></image>
+            <text class="count ear_icon">{{item.listenCount}}</text>
+        </view>
+        <view class="info">
+            <text class="title">{{item.topTitle}}</text>
+            <view class="text"
+                wx:for="{{item.songList}}"
+                wx:key="unique"
+            >
+                {{index+1}}
+                <text>{{item.songname}}</text>- {{item.singername}}
+            </view>
+        </view>
+        <view class="arrow"></view>
+    </view>
+</view>
+
+<!--搜索-->
+<view id="search" hidden="{{currentTab !== 2}}">
+
+    <!--*搜索框*-->
+    <view class="search-bar">
+        <view class="search-wrap">
+            <view class="search-box">
+                <icon class="icon-search" type="search" size="14"></icon>
+                <input type="text"
+                    class="search-input"
+                    placeholder="搜索歌曲、歌单、专辑"
+                    focus="{{inputFocus}}"
+                    value="{{searchKeyword}}"
+                    bindinput="onSearchInput"
+                    bindfocus="onSearchFocus"
+                    bindconfirm="onSearchConfirm"
+                />
+                <view class="icon-clear" hidden="{{searchKeyword.length<1}}">
+                    <icon type="clear" size="20" catchtap="onClearInput"></icon>
+                </view>
+            </view>
+        </view>
+        <view class="cancel-btn"
+            bindtap="onSearchCancel"
+            hidden="{{!searchCancelShow}}"
+        >
+            取消
+        </view>
+    </view>
+
+    <!--*热门搜索*-->
+    <view class="search-hot"
+        wx:if="{{searchHotShow&&!searchHistoryShow&&!searchResultShow}}">
+        <text class="hot-title">热门搜索</text>
+        <view class="hot-wrap">
+            <text class="hot-item hot">{{special}}</text>
+            <text class="hot-item"
+            wx:for="{{hotkey}}"
+            wx:key="{{item.k}}"
+            data-name="{{item.k}}"
+            catchtap="oninInputSearch">
+                {{item.k}}
+            </text>
+        </view>
+    </view>
+
+    <!--*搜索历史*-->
+    <view class="search-history"
+    wx:if="{{searchHistoryShow&&!searchHotShow&&!searchResultShow}}">
+        <view class="search-record"
+        wx:if="{{searchHistorys.length>0}}">
+            <block
+            wx:for="{{searchHistorys}}"
+            wx:key="{{index}}">
+                <view class="record-item">
+                    <icon class="icon-time"
+                    color="#d7d7d7"
+                    type="waiting_circle"
+                    size="20"></icon>
+                    <view class="record-con" data-name="{{item}}" catchtap="oninInputSearch">{{item}}</view>
+                    <icon class="icon-close"
+                    color="#d7d7d7"
+                    type="clear"
+                    size="15"
+                    data-item="{{item}}"
+                    catchtap="onSearchHistoryDelete"></icon>
+                </view>
+            </block>
+            <view class="record-handle">
+                <text catchtap="onSearchHistoryDeleteAll">清除搜索记录</text>
+            </view>
+        </view>
+    </view>
+
+    <!--*搜索结果*-->
+    <view class="search-result"
+    wx:if="{{searchResultShow&&!searchHotShow&&!searchHistoryShow}}">
+        <scroll-view style="height:{{scrollviewH}}px;"
+        scroll-y="true"
+        bindscrolltolower="searchScrollLower"
+        lower-threshold="50"
+        scroll-into-view="{{scrollToView}}"
+        scroll-with-animation="true"
+        enable-back-to-top="true"
+        bindscroll="onScroll"
+        bindscrolltolower="onScrollLower">
+            <view class="result-item"
+            wx:if="{{zhida.type == 2}}">
+                <image class="media"
+                src="https://y.gtimg.cn/music/photo_new/T001R68x68M000{{zhida.singermid}}.jpg"></image>
+                <text class="title">{{zhida.singername}}</text>
+                <view class="subtitle">
+                    <text>单曲：{{zhida.songnum}}</text>
+                    <text>专辑：{{zhida.albumnum}}</text>
+                </view>
+            </view>
+            <view id="scrollTop" class="result-item"
+            wx:for="{{searchSongList}}"
+            wx:key="{{item.songid}}"
+            data-data="{{item}}"
+            data-id="{{item.songid}}"
+            data-mid="{{item.songmid}}"
+            data-albummid="{{item.albummid}}"
+            data-from="searchlist"
+            bindtap="onPlaysongTap">
+                <view class="icon {{item.isonly=='0'?'nocopyright':''}}"></view>
+                <text class="title">{{item.songname}}</text>
+                <view class="subtitle">
+                    <text wx:for="{{item.singer}}"
+                          wx:key="unique">{{item.name}}</text>
+                </view>
+            </view>
+            <view class="loading"
+            hidden="{{!searchLoading}}">正在载入更多...</view>
+            <view class="loading complete"
+            wx:if="{{searchLoadingComplete}}">已加载全部</view>
+            <view class="backToTop"
+            hidden="{{!backToTop}}"
+            catchtap="onBackToTop"></view>
+        </scroll-view>
+    </view>
+
+</view>
