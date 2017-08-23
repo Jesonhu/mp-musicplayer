@@ -115,8 +115,37 @@ app.wxss 全局样式表可以为空
 <import src="文件目录地址"></import>
 
 <!-- 使用实例 -->
-<!--顶部tab导航-->
+<!--顶部tab导航 is="xxx"和模板 template name="xxx"一样 -->
 <template is="navbar" data="{{navbar:navbar,currentTab:currentTab}}"></template>
 ```
 
 ```tab切换```
+hidden="{{boolean}}" 与 wx:if="{{boolean}}" [官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/conditional.html)
+
+```html
+       <!--顶部tab导航-->
+       <template is="navbar" data="{{navbar:navbar,currentTab:currentTab}}"></template>
+
+       <!--    tab内容     -->
+       <view hidden="{{currentTab !== 0}}">
+       <view hidden="{{currentTab !== 1}}">
+       <view hidden="{{currentTab !== 2}}">
+```
+[navbar组件](./components/navbar/navbar.wxml)代码 事件：bindtap="onNavbarTap"[官方事件参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/event.html)
+
+```javascript
+   // index.js
+   Page({
+     data: {
+       currentTab: 0
+     },
+     
+     /* 导航栏操作 */
+    onNavbarTap(ev) {
+        // console.log(ev);
+        this.setData({currentTab: ev.currentTarget.dataset.index});
+    }
+   })
+```
+改变data中的数据 setDate()方法;
+ev.currentTarget.dataset.index ,组件属性data-index="{{index}}"当前对象所在父元素中的索引,参考：[小程序dataset参考](http://www.aiyingli.com/44636.html), [原生event参考](http://www.w3school.com.cn/jsref/event_currenttarget.asp)
