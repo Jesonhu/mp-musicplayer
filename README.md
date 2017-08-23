@@ -148,4 +148,4 @@ hidden="{{boolean}}" 与 wx:if="{{boolean}}" [官方参考](https://mp.weixin.qq
    })
 ```
 改变data中的数据 setDate()方法;
-ev.currentTarget.dataset.index ,组件属性data-index="{{index}}"当前对象所在父元素中的索引,参考：[小程序dataset参考](http://www.aiyingli.com/44636.html), [原生event参考](http://www.w3school.com.cn/jsref/event_currenttarget.asp)
+ev.currentTarget.dataset.index ,组件属性data-index="{{index}}"当前对象所在父元素中的索引,参考：[小程序dataset参考](http://www.aiyingli.com/44636.html) [WX dataset参考2](http://www.aiyingli.com/46397.html) [WX dataset参考3](http://blog.csdn.net/beilinyu/article/details/53945438), [原生event参考](http://www.w3school.com.cn/jsref/event_currenttarget.asp)
