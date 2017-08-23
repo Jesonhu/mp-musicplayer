@@ -86,7 +86,7 @@
 # 代码文件说明
 
 ## 1 根目录app
-> app为微信小程序的主体部分```[官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/component/)```
+> app为微信小程序的主体部分 [官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/component/)
 
 > 包括：[app.js](./app.js)、[app.json](./app.json)、[app.wxss](./app.wxss)
 
