@@ -102,14 +102,14 @@ app.wxss 全局样式表可以为空
 > index为首页文件目录 
 > 包括: [index.js](./pages/index/index.js) 、[index.json](./pages/index/index.json) 、[index.wxml](./pages/index/index.wxml) 、[index.wxss](./pages/index/index.wxss)
 #### index.wxml
-```涉及知识点```
+
+涉及知识点
+```模板引入```
 > 引用的模板：(import方式引入)
 [movielist.wxml](./components/movielist/movielist.wxml)、
 [loading/index.wxml](./components/loading/index.wxml)、
 [navbar.wxml](./components/navbar/navbar.wxml)、
-[swiper.wxml](./components/swiper/swiper.wxml)
-
-> 官方引入模板参考：[文档参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/template.html)
+[swiper.wxml](./components/swiper/swiper.wxml)[官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/template.html)
 ```html
 <!-- 语法 -->
 <import src="文件目录地址"></import>
@@ -118,3 +118,5 @@ app.wxss 全局样式表可以为空
 <!--顶部tab导航-->
 <template is="navbar" data="{{navbar:navbar,currentTab:currentTab}}"></template>
 ```
+
+```tab切换```
