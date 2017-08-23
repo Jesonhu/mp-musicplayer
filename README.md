@@ -104,6 +104,7 @@ app.wxss 全局样式表可以为空
 #### index.wxml
 
 涉及知识点
+
 ```模板引入```
 > 引用的模板：(import方式引入)
 [movielist.wxml](./components/movielist/movielist.wxml)、
@@ -120,6 +121,7 @@ app.wxss 全局样式表可以为空
 ```
 
 ```tab切换```
+
 hidden="{{boolean}}" 与 wx:if="{{boolean}}" [官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/conditional.html)
 
 ```html
@@ -149,3 +151,40 @@ hidden="{{boolean}}" 与 wx:if="{{boolean}}" [官方参考](https://mp.weixin.qq
 ```
 改变data中的数据 setDate()方法;
 ev.currentTarget.dataset.index ,组件属性data-index="{{index}}"当前对象所在父元素中的索引,参考：[小程序dataset参考](http://www.aiyingli.com/44636.html) [WX dataset参考2](http://www.aiyingli.com/46397.html) [WX dataset参考3](http://blog.csdn.net/beilinyu/article/details/53945438), [原生event参考](http://www.w3school.com.cn/jsref/event_currenttarget.asp)
+
+```页面跳转```
+
+```html
+   <!-- 热门歌单 -->
+    <view class="channel hot">
+        <text class="{{songList.length>0?'title':''}}">热门歌单</text>
+        <view class="list">
+            <view class="item songitem"
+                  wx:for="{{songList}}"
+                  wx:key="{{item.id}}"
+                  data-id="{{item.id}}"
+                  bindtap="onHotListTap"
+            >
+                <view class="list-media">
+                    <image class="img" src="{{item.picUrl}}" mode="widthFix"></image>
+                    <text class="list-count">{{item.accessnum}}</text>
+                </view>
+                <text class="text">{{item.songListDesc}}</text>
+                <text class="author">{{item.songListAuthor}}</text>
+                <text class="play"></text>
+            </view>
+        </view>
+    </view>
+```
+```javascript
+       const app = getApp(); // 通过全局函数 getApp() 可以获取全局的应用实例，如果需要全局的数据可以在 App()(app.js) 中设置
+       const util = require('../../utils/util.js');
+       let that;
+       
+       Page({
+              songList: []
+
+
+       })
+```
+
