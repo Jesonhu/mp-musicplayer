@@ -1,15 +1,13 @@
-const  CONFIG_HOST = require('./config_host');
 
-
-// 过滤器-显示格式设置（...万）
+/* 过滤器-显示格式设置（...万） */
 function formatWan(n) {
     n = n.toString(); // 返回字符串表示
     return (n / 10000).toFixed(1) + '万'; // toFixed(1)四舍五入保留指定小数位小数
-}
+};
 
-/**
- * 推荐数据api
- */
+/*
+** 推荐数据api
+*/
 
 // 获取推荐数据
 // util.getRecomment((data) => {
@@ -22,45 +20,41 @@ function formatWan(n) {
 //     });
 //     // console.log('首页数据', data);
 // });
+/* 获取推荐数据 */
 function getRecomment(cb) {
   wx.request({
-    //   url: 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg',
-    //   data: { // 请求的参数
-    //       g_tk: 5381,
-    //       uin: 0,
-    //       format: 'json',
-    //       inCharset: 'utf-8',
-    //       outCharset: 'utf-8',
-    //       notice: 0,
-    //       platform: 'h5',
-    //       needNewCode: 1,
-    //       _: Date.now()
-    //   },
-      url: CONFIG_HOST.index.slider.url,
-      data: CONFIG_HOST.index.slider.params,
+      url: 'https://c.y.qq.com/musichall/fcgi-bin/fcg_yqqhomepagerecommend.fcg',
+      data: { // 请求的参数
+          g_tk: 5381,
+          uin: 0,
+          format: 'json',
+          inCharset: 'utf-8',
+          outCharset: 'utf-8',
+          notice: 0,
+          platform: 'h5',
+          needNewCode: 1,
+          _: Date.now()
+      },
       method: 'GET', // 默认为GET 如果为get可以不写
       header: {'content-Type': 'application/json'},
       success(res) {
           if (res.statusCode == 200) { // 请求status为200时
               let data = res.data,
                   songlist = data.data.songList;
-                  console.log(songlist);
               for (let i=0; i<songlist.length;i++) {
                   songlist[i].accessnum = formatWan(songlist[i].accessnum); //播放次数格式更改
-              }
+              };
               cb(data);
-          } else {
-              console.log('request getRecomment faild');
-          }
+          };
       }
-  })
-}
+  });
+};
 
-/**
- *  获取排行榜相关api
- */
+/*
+**  获取排行榜相关api
+*/
 
-// 获取排行榜数据
+/* 获取排行榜数据 */
 function getTopList(cb) {
   wx.request({
       url: 'https://c.y.qq.com/v8/fcg-bin/fcg_myqq_toplist.fcg',
@@ -75,8 +69,6 @@ function getTopList(cb) {
           needNewCode: 1,
           _: Date.now()
       },
-    //   url: CONFIG_HOST.index.topList.url,
-    //   data: CONFIG_HOST.index.topList.params,
       header: {'content-Type': 'application/json'},
       success(res) {
         if (res.statusCode === 200) {
@@ -87,14 +79,12 @@ function getTopList(cb) {
                 topList[i].listenCount = formatWan(topList[i].listenCount);
             };
             cb(topList);
-        } else {
-            console.log('request getTopList faild');
-        }
+        };
       }
   });
-}
+};
 
-// 获取排行榜详情信息(list.js使用) 123
+/* 获取排行榜详情信息(list.js使用) */
 function getToplistInfo(id, cb) {
   wx.request({
       url: 'https://c.y.qq.com/v8/fcg-bin/fcg_v8_toplist_cp.fcg',
@@ -113,21 +103,17 @@ function getToplistInfo(id, cb) {
           topid: id,
           _: Date.now()
       },
-    //   url: CONFIG_HOST.detail.topListInfo.url,
-    //   data: CONFIG_HOST.detail.topListInfo.params,
       method: 'GET',
       header: { 'content-type': 'application/json' },
       success(res) {
           if (res.statusCode === 200) {
             cb(res.data);
-          } else {
-            console.log('request getToplistInfo faild');
-          }
+          };
       }
   });
-}
+};
 
-// 获取热门歌单数据(点击进来的介绍)
+/* 获取热门歌单数据(点击进来的介绍) */
 function getListInfo(id, cb) {
   wx.request({
       url: 'https://c.y.qq.com/qzone/fcg-bin/fcg_ucc_getcdinfo_byids_cp.fcg',
@@ -150,8 +136,6 @@ function getListInfo(id, cb) {
           nosign: 1,
           _: new Date().getTime()
       },
-    //   url: CONFIG_HOST.list.listInfo.url,
-    //   data: CONFIG_HOST.list.listInfo.params,
       header: {'content-Type': 'application/json' },
       success(res) {
           if (res.statusCode === 200) {
@@ -159,18 +143,16 @@ function getListInfo(id, cb) {
               let list = data.cdlist;
               for (let i = 0; i< list.length; i++) {
                   list[i].visitnum = formatWan(list[i].visitnum);
-              }
+              };
               cb(list[0]);
-          } else {
-              console.log('request getListInfo faild');
           }
       }
   });
-}
+};
 
 /**
- * 设置背景颜色
- */
+* 设置背景颜色
+*/
 function getLogoPic(pic_url, cb) { // 获取图片
     wx.request({
         url: 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_gedanpic_magiccolor.fcg',
@@ -186,23 +168,19 @@ function getLogoPic(pic_url, cb) { // 获取图片
             pic_url: pic_url,
             _: new Date().getTime()
         },
-        // url: CONFIG_HOST.list.listLogoPic.url,
-        // data: CONFIG_HOST.list.listInfo.params,
         header: {'content-Type': 'application/json'},
         success(res) {
             if (res.statusCode === 200) {
               let data = res.data;
               cb(res.data)
-            } else {
-                console.log('request getLogoPic faild');
-            }
+            };
         }
     });
-}
+};
 
 /**
- * 获取歌词方法
- */
+* 获取歌词方法
+*/
 function getLyric(id ,cb) {
   wx.request({
      url: 'https://route.showapi.com/213-2',
@@ -212,15 +190,11 @@ function getLyric(id ,cb) {
          showapi_timestamp: new Date().getTime(),
          showapi_sign: 'd23793312daf46ad88a06294772b7aac'
      },
-    //  url: CONFIG_HOST.detail.lyric.url,
-    //  data: CONFIG_HOST.detail.lyric.params,
      header: {'content-Type': 'application/json'},
      success(res) {
          if (res.statusCode === 200) {
             cb(res.data)
-         } else {
-            console.log('request getLyric faild');
-        }
+         }
      }
   });
 };
@@ -237,25 +211,21 @@ function getSongInfo(id, mid, cb) {
           midlist: mid,
           typelist: 0
       },
-    //   url: CONFIG_HOST.detail.songInfo.url,
-    //   data: CONFIG_HOST.detail.songInfo.params,
       header: {'content-Type': 'application/json'},
       success(res) {
           if (res.statusCode === 200) {
               let data = res.data.data;
               cb(data);
-          } else {
-            console.log('request getSongInfo faild');
           }
       }
   });
-}
+};
 
 /**
  * 搜索相关
  */
 
-// 获取热门搜索
+/* 获取热门搜索 */
 function getHotSearch(cb) {
     wx.request({
         url: 'https://c.y.qq.com/splcloud/fcgi-bin/gethotkey.fcg',
@@ -270,22 +240,19 @@ function getHotSearch(cb) {
             needNewCode: 1,
             _: Date.now()
         },
-        // url: CONFIG_HOST.list.hotSearch.url,
-        // data: CONFIG_HOST.list.hotSearch.params,
         header: {'content-Type': 'application/json'},
         success(res) {
             if (res.statusCode === 200) {
                 let data = res.data;
                 data.data.hotkey = data.data.hotkey.slice(0,8);
                 cb(data);
-            } else {
-                console.log('request getHotSearch faild');
             }
         }
-    })
-}
 
-// 获取搜索结果
+    })
+};
+
+/* 获取搜索结果 */
 function getSearchMusic(keyword, page, cb) {
     wx.request({
       url: 'https://c.y.qq.com/soso/fcgi-bin/search_for_qq_cp',
@@ -312,18 +279,14 @@ function getSearchMusic(keyword, page, cb) {
         remoteplace: 'txt.mqq.all',
         _: Date.now()
       },
-    //   url: CONFIG_HOST.list.searchMusic.url,
-    //   data: CONFIG_HOST.list.searchMusic.params,
       header: {'content-Type': 'application/json'},
       success(res) {
           if (res.statusCode === 200) {
-            cb(res.data);
-          } else {
-            console.log('request getSearchMusic faild'); 
+              cb(res.data);
           }
       }
     });
-}
+};
 
 module.exports = {
     getRecomment: getRecomment,
@@ -335,4 +298,5 @@ module.exports = {
     getSongInfo: getSongInfo,
     getHotSearch: getHotSearch,
     getSearchMusic: getSearchMusic
+
 }
