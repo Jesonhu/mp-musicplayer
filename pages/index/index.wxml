@@ -13,6 +13,7 @@
 
 <!--首页 推荐-->
 <view class="recommend" hidden="{{currentTab !==0 }}">
+
     <!-- 轮播图 -->
     <template is="swiper" data="{{slider}}"></template>
 

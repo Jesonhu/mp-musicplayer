@@ -46,7 +46,7 @@ Page({
                 radioList: data.data.radioList,
                 songList: data.data.songList
             });
-            // console.log('首页数据' + data);
+            // console.log('首页数据', data);
         });
 
         //* 排行榜数据
@@ -57,7 +57,7 @@ Page({
            });
         });
 
-        //* 搜索 热门搜索
+        // 搜索 热门搜索
         util.getHotSearch((data) => {
            // console.log(data.data.hotkey);
            that.setData({

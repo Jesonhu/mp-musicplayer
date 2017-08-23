@@ -19,6 +19,7 @@ Page({
            wx.hideLoading();
 
            data.color == '14737632' && that.setData({isLight: true});
+           console.log('toplist', data);
            that.setData({
               topinfo: data.topinfo,
               songlist: data.songlist,
