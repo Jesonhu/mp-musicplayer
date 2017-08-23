@@ -182,9 +182,39 @@ ev.currentTarget.dataset.index ,组件属性data-index="{{index}}"当前对象�
        let that;
        
        Page({
-              songList: []
-
-
-       })
+              data: {
+                     songList: []
+              }
+              
+              // 生命周期函数--监听页面加载
+              onLoad(options) { 
+                   that = this;
+                      // 页面加载指示
+                      wx.showLoading({title: '数据加载中...', mask: true});
+                      
+                      // 推荐频道 热门歌单
+                      util.getRecomment((data) => {
+                          wx.hideLoading(); // 隐藏加载中提示
+                          this.setData({ // 更新data里的数据
+                              loading: true,
+                              slider: data.data.slider,
+                              radioList: data.data.radioList,
+                              songList: data.data.songList
+                          });
+                          // console.log('首页数据' + data);
+                      });  
+              },
+              
+              // 推荐页面点击跳转到list
+              onHotListTap(ev) {
+               let id = ev.currentTarget.dataset.id; // 点击位置的 data-id
+               wx.navigateTo({ // 保留当前页面，跳转的某个页面 wx.navigateBack可以返回
+                   url: '../list/list?listId=' + id
+               });
+              }
+       })
 ```
+
+> 参考：
+1 页面导航：[官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/api/ui-navigate.html#wxnavigatetoobject)
 
