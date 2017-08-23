@@ -95,7 +95,7 @@
 [navbar.wxml](./components/navbar/navbar.wxml)、
 [swiper.wxml](./components/swiper/swiper.wxml)
 
-> 官方引入模板参考：[文档参考]（https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/template.html）
+> 官方引入模板参考：[文档参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/view/wxml/template.html)
 ```html
 <!-- 语法 -->
 <import src="文件目录地址"></import>
