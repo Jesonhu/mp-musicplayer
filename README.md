@@ -92,7 +92,7 @@
 
 app.js 配置全局数据```globalData.songData```  ```globalData.songLists```
 
-app.json 小程序全局配置```[官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html)```
+app.json 小程序全局配置 [官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html)
 
 app.wxss 全局样式表可以为空
 
