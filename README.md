@@ -83,12 +83,26 @@
 ```
 -----
 
-# 页面说明
+# 代码文件说明
 
-## 1 index
+## 1 根目录app
+> app为微信小程序的主体部分```[官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/component/)```
+
+> 包括：[app.js](./app.js)、[app.json](./app.json)、[app.wxss](./app.wxss)
+
+app.js 配置全局数据```globalData.songData```  ```globalData.songLists```
+
+app.json 小程序全局配置```[官方参考](https://mp.weixin.qq.com/debug/wxadoc/dev/framework/config.html)```
+
+app.wxss 全局样式表可以为空
+
+----
+
+## 2 index首页
 > index为首页文件目录 
 > 包括: [index.js](./pages/index/index.js) 、[index.json](./pages/index/index.json) 、[index.wxml](./pages/index/index.wxml) 、[index.wxss](./pages/index/index.wxss)
 #### index.wxml
+```涉及知识点```
 > 引用的模板：(import方式引入)
 [movielist.wxml](./components/movielist/movielist.wxml)、
 [loading/index.wxml](./components/loading/index.wxml)、
